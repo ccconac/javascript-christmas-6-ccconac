@@ -9,6 +9,7 @@ const OUTPUT_MESSAGE = Object.freeze({
   preview: date =>
     `12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n`,
   menu: (name, count) => `${name} ${count}개`,
+  beforeTotalPrice: totalPrice => `${totalPrice}원`,
 });
 
 const ERROR_PREFIX = '[ERROR]';

@@ -1,8 +1,10 @@
 import Validator from '../validator/Validator';
+import MENU_BOARD from '../constants/menuBoard';
 
 class Menu {
   #menuBoard;
   #orderedMenus;
+  #totalPrice;
 
   constructor(menuBoard) {
     this.#menuBoard = menuBoard;
@@ -24,6 +26,20 @@ class Menu {
     });
 
     this.#orderedMenus.push(...menus);
+  }
+
+  circulateBeforeTotal() {
+    const menuNames = this.#orderedMenus.map(([name]) => name);
+    const menuCounts = this.#orderedMenus.map(([, count]) => count);
+
+    this.#totalPrice = menuNames.reduce((sum, menuName, index) => {
+      const category = MENU_BOARD.find(menuBoard => menuName in menuBoard.menu);
+      sum += category.menu[menuName] * menuCounts[index];
+
+      return sum;
+    }, 0);
+
+    return this.#totalPrice;
   }
 }
 

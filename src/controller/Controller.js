@@ -1,4 +1,5 @@
 import Validator from '../validator/Validator';
+import formatPrice from '../utils/formatPrice';
 
 class Controller {
   #inputView;
@@ -20,6 +21,7 @@ class Controller {
     await this.#readMenus();
     this.#printPreviewMessage();
     this.#printOrderList();
+    this.#printBeforeTotalPrice();
   }
 
   #printGreetingMessage() {
@@ -58,6 +60,12 @@ class Controller {
 
   #printOrderList() {
     this.#outputView.printMenu(this.#orderedMenus);
+  }
+
+  #printBeforeTotalPrice() {
+    const totalPrice = this.#menu.circulateBeforeTotal();
+    const formatTotalPrice = formatPrice(totalPrice);
+    this.#outputView.printBeforeTotal(formatTotalPrice);
   }
 }
 

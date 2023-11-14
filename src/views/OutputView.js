@@ -21,6 +21,11 @@ const OutputView = {
       Console.print(OUTPUT_MESSAGE.menu(name, count));
     });
   },
+
+  printBeforeTotal(totalPrice) {
+    Console.print(TITLE.beforeTotalPrice);
+    Console.print(OUTPUT_MESSAGE.beforeTotalPrice(totalPrice));
+  },
 };
 
 export default OutputView;
