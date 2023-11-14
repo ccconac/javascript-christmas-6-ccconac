@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { OUTPUT_MESSAGE } from '../constants/messages';
+import TITLE from '../constants/title';
 
 const OutputView = {
   printErrorMessage(message) {
@@ -14,8 +15,11 @@ const OutputView = {
     Console.print(OUTPUT_MESSAGE.preview(date));
   },
 
-  printMenu() {
-    Console.print('<주문 메뉴>');
+  printMenu(orderedMenus) {
+    Console.print(TITLE.orderMenu);
+    orderedMenus.forEach(([name, count]) => {
+      Console.print(OUTPUT_MESSAGE.menu(name, count));
+    });
   },
 };
 

@@ -4,7 +4,9 @@ class Controller {
   #inputView;
   #outputView;
   #menu;
+
   #reservationDate;
+  #orderedMenus;
 
   constructor(inputView, outputView, menu) {
     this.#inputView = inputView;
@@ -17,6 +19,7 @@ class Controller {
     await this.#readReservationDate();
     await this.#readMenus();
     this.#printPreviewMessage();
+    this.#printOrderList();
   }
 
   #printGreetingMessage() {
@@ -41,6 +44,7 @@ class Controller {
       const order = await this.#inputView.readMenu();
       try {
         const orderedMenus = this.#menu.getOrderedMenus(order);
+        this.#orderedMenus = orderedMenus;
         return orderedMenus;
       } catch ({ message }) {
         this.#outputView.printErrorMessage(message);
@@ -50,6 +54,10 @@ class Controller {
 
   #printPreviewMessage() {
     this.#outputView.printPreview(this.#reservationDate);
+  }
+
+  #printOrderList() {
+    this.#outputView.printMenu(this.#orderedMenus);
   }
 }
 
