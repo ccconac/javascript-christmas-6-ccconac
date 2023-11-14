@@ -1,5 +1,7 @@
 const INPUT_MESSAGE = Object.freeze({
   date: '12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n',
+  order:
+    '주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n',
 });
 
 const OUTPUT_MESSAGE = Object.freeze({
@@ -10,6 +12,9 @@ const ERROR_PREFIX = '[ERROR]';
 
 const ERROR_MESSAGE = Object.freeze({
   invalidDate: `${ERROR_PREFIX} 유효하지 않은 날짜입니다. 다시 입력해 주세요.`,
+  invalidOrder: `${ERROR_PREFIX} 유효하지 않은 주문입니다. 다시 입력해 주세요.`,
+  invalidTotal: `${ERROR_PREFIX} 메뉴는 총 20개까지만 주문 가능합니다. 다시 입력해 주세요.`,
+  invalidDrink: `${ERROR_PREFIX} 음료 외 다른 메뉴 주문이 추가로 필요합니다.`,
 });
 
 export { INPUT_MESSAGE, OUTPUT_MESSAGE, ERROR_MESSAGE };
