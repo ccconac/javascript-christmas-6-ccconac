@@ -6,8 +6,12 @@ const OutputView = {
     Console.print(message);
   },
 
-  printStartMessage() {
+  printGreeting() {
     Console.print(OUTPUT_MESSAGE.start);
+  },
+
+  printPreview(date) {
+    Console.print(OUTPUT_MESSAGE.preview(date));
   },
 
   printMenu() {
