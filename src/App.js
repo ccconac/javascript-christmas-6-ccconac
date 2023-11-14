@@ -2,15 +2,15 @@ import Controller from './controller/Controller';
 import InputView from './views/InputView';
 import OutputView from './views/OutputView';
 import MENU_BOARD from './constants/menuBoard';
-import Menu from './model/Menu';
+import Order from './model/Order';
 
 class App {
-  #menu;
+  #order;
   #controller;
 
   constructor() {
-    this.#menu = new Menu(MENU_BOARD);
-    this.#controller = new Controller(InputView, OutputView, this.#menu);
+    this.#order = new Order(MENU_BOARD);
+    this.#controller = new Controller(InputView, OutputView, this.#order);
   }
 
   async run() {

@@ -4,15 +4,15 @@ import formatPrice from '../utils/formatPrice';
 class Controller {
   #inputView;
   #outputView;
-  #menu;
+  #order;
 
   #reservationDate;
   #orderedMenus;
 
-  constructor(inputView, outputView, menu) {
+  constructor(inputView, outputView, order) {
     this.#inputView = inputView;
     this.#outputView = outputView;
-    this.#menu = menu;
+    this.#order = order;
   }
 
   async startEvent() {
@@ -46,7 +46,7 @@ class Controller {
     while (true) {
       const order = await this.#inputView.readMenu();
       try {
-        const orderedMenus = this.#menu.getOrderedMenus(order);
+        const orderedMenus = this.#order.getOrderedMenus(order);
         this.#orderedMenus = orderedMenus;
         return orderedMenus;
       } catch ({ message }) {
@@ -64,13 +64,13 @@ class Controller {
   }
 
   #printBeforeTotalPrice() {
-    const totalPrice = this.#menu.circulateBeforeTotal();
+    const totalPrice = this.#order.circulateBeforeTotal();
     const formatTotalPrice = formatPrice(totalPrice);
     this.#outputView.printBeforeTotal(formatTotalPrice);
   }
 
   #printGivewayMenu() {
-    const giveawayMenu = this.#menu.getGiveawayMenu();
+    const giveawayMenu = this.#order.getGiveawayMenu();
     this.#outputView.printGiveaway(giveawayMenu);
   }
 }
