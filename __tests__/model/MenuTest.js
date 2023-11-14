@@ -26,4 +26,21 @@ describe('메뉴 클래스 테스트', () => {
 
     expect(result).toEqual(142000);
   });
+
+  test('할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개를 증정하는지 확인한다.', () => {
+    menu.getOrderedMenus(order);
+    menu.circulateBeforeTotal();
+    const result = menu.getGiveawayMenu();
+
+    expect(result).toEqual('샴페인 1개');
+  });
+
+  test('증정 이벤트에 해당하지 않는 경우, 증정 메뉴 `없음`을 보여 주는지 확인한다.', () => {
+    order = '티본스테이크-1,제로콜라-1';
+    menu.getOrderedMenus(order);
+    menu.circulateBeforeTotal();
+    const result = menu.getGiveawayMenu();
+
+    expect(result).toEqual('없음');
+  });
 });
