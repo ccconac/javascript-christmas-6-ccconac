@@ -41,6 +41,11 @@ class Menu {
 
     return this.#totalPrice;
   }
+
+  getGiveawayMenu() {
+    if (this.#totalPrice < 120000) return '없음';
+    return '샴페인 1개';
+  }
 }
 
 export default Menu;

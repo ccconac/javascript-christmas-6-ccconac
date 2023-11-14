@@ -22,6 +22,7 @@ class Controller {
     this.#printPreviewMessage();
     this.#printOrderList();
     this.#printBeforeTotalPrice();
+    this.#printGivewayMenu();
   }
 
   #printGreetingMessage() {
@@ -66,6 +67,11 @@ class Controller {
     const totalPrice = this.#menu.circulateBeforeTotal();
     const formatTotalPrice = formatPrice(totalPrice);
     this.#outputView.printBeforeTotal(formatTotalPrice);
+  }
+
+  #printGivewayMenu() {
+    const giveawayMenu = this.#menu.getGiveawayMenu();
+    this.#outputView.printGiveaway(giveawayMenu);
   }
 }
 

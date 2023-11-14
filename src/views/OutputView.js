@@ -26,6 +26,11 @@ const OutputView = {
     Console.print(TITLE.beforeTotalPrice);
     Console.print(OUTPUT_MESSAGE.beforeTotalPrice(totalPrice));
   },
+
+  printGiveaway(giveaway) {
+    Console.print(TITLE.giveawayMenu);
+    Console.print(giveaway);
+  },
 };
 
 export default OutputView;
