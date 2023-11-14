@@ -10,6 +10,13 @@ const OUTPUT_MESSAGE = Object.freeze({
     `12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n`,
   menu: (name, count) => `${name} ${count}개`,
   beforeTotalPrice: totalPrice => `${totalPrice}원`,
+  christmasDiscount: christmasEvent =>
+    `크리스마스 디데이 할인: ${christmasEvent}원`,
+  weekendDiscount: weekendEvent => `평일 할인: ${weekendEvent}원`,
+  weekdayDiscount: weekdayEvent => `주말 할인: ${weekdayEvent}원`,
+  specialDiscount: specialEvent => `특별 할인: ${specialEvent}원`,
+  giveaway: giveawayEvent => `증정 이벤트: ${giveawayEvent}원`,
+  none: '없음',
 });
 
 const ERROR_PREFIX = '[ERROR]';

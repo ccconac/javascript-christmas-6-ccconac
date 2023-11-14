@@ -5,14 +5,17 @@ class Controller {
   #inputView;
   #outputView;
   #order;
+  #benefit;
 
   #reservationDate;
   #orderedMenus;
+  #giveawayMenu;
 
-  constructor(inputView, outputView, order) {
+  constructor(inputView, outputView, order, benefit) {
     this.#inputView = inputView;
     this.#outputView = outputView;
     this.#order = order;
+    this.#benefit = benefit;
   }
 
   async startEvent() {
@@ -23,6 +26,7 @@ class Controller {
     this.#printOrderList();
     this.#printBeforeTotalPrice();
     this.#printGivewayMenu();
+    this.#printBenefits();
   }
 
   #printGreetingMessage() {
@@ -71,7 +75,85 @@ class Controller {
 
   #printGivewayMenu() {
     const giveawayMenu = this.#order.getGiveawayMenu();
+    this.#giveawayMenu = giveawayMenu;
     this.#outputView.printGiveaway(giveawayMenu);
+  }
+
+  #applyChristmasDiscount() {
+    const totalPrice = this.#order.circulateBeforeTotal();
+    const discount = this.#benefit.christmasDiscount(
+      this.#reservationDate,
+      totalPrice,
+    );
+
+    if (!discount) return false;
+
+    this.#outputView.printChristmasEvent(formatPrice(discount));
+    return true;
+  }
+
+  #applyWeekendDiscount() {
+    const totalPrice = this.#order.circulateBeforeTotal();
+    const discount = this.#benefit.weekendDiscount(
+      this.#reservationDate,
+      this.#orderedMenus,
+      totalPrice,
+    );
+
+    if (!discount) return false;
+
+    this.#outputView.printWeekendEvent(formatPrice(discount));
+    return true;
+  }
+
+  #applyWeekdayDiscount() {
+    const totalPrice = this.#order.circulateBeforeTotal();
+    const discount = this.#benefit.weekdayDiscount(
+      this.#reservationDate,
+      this.#orderedMenus,
+      totalPrice,
+    );
+
+    if (!discount) return false;
+
+    this.#outputView.printWeekdayEvent(formatPrice(discount));
+    return true;
+  }
+
+  #applySpecialDiscount() {
+    const totalPrice = this.#order.circulateBeforeTotal();
+    const discount = this.#benefit.specialDiscount(
+      this.#reservationDate,
+      totalPrice,
+    );
+
+    if (!discount) return false;
+
+    this.#outputView.printSpecialEvent(formatPrice(discount));
+    return true;
+  }
+
+  #applyGiveawayDiscount() {
+    const discount = this.#benefit.giveawayEvent(this.#giveawayMenu);
+
+    if (!discount) return false;
+
+    this.#outputView.printGiveawayEvent(formatPrice(discount));
+    return true;
+  }
+
+  #printBenefits() {
+    this.#outputView.printEvent();
+
+    let isNoBenefit = false;
+
+    isNoBenefit = this.#applyChristmasDiscount() || isNoBenefit;
+    isNoBenefit = this.#applyWeekendDiscount() || isNoBenefit;
+    isNoBenefit = this.#applyWeekdayDiscount() || isNoBenefit;
+    isNoBenefit = this.#applySpecialDiscount() || isNoBenefit;
+    isNoBenefit = this.#applyGiveawayDiscount() || isNoBenefit;
+
+    if (!isNoBenefit) this.#outputView.printNoBenefit();
   }
 }
 

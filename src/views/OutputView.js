@@ -31,6 +31,34 @@ const OutputView = {
     Console.print(TITLE.giveawayMenu);
     Console.print(giveaway);
   },
+
+  printEvent() {
+    Console.print(TITLE.benefitDetails);
+  },
+
+  printChristmasEvent(christmasEvent) {
+    Console.print(OUTPUT_MESSAGE.christmasDiscount(christmasEvent));
+  },
+
+  printWeekendEvent(weekendEvent) {
+    Console.print(OUTPUT_MESSAGE.weekendDiscount(weekendEvent));
+  },
+
+  printWeekdayEvent(weekdayEvent) {
+    Console.print(OUTPUT_MESSAGE.weekdayDiscount(weekdayEvent));
+  },
+
+  printSpecialEvent(specialEvent) {
+    Console.print(OUTPUT_MESSAGE.specialDiscount(specialEvent));
+  },
+
+  printGiveawayEvent(giveawayEvent) {
+    Console.print(OUTPUT_MESSAGE.giveaway(giveawayEvent));
+  },
+
+  printNoBenefit() {
+    Console.print(OUTPUT_MESSAGE.none);
+  },
 };
 
 export default OutputView;
