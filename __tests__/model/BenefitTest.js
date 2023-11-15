@@ -3,7 +3,7 @@ import {
   WEEKEND_EVENT,
   WEEKDAY_EVENT,
   SPECIAL_EVENT,
-} from '../../src/constants/eventDate';
+} from '../../src/constants/date';
 
 describe('혜택 클래스 테스트', () => {
   let benefit;

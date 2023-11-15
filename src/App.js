@@ -1,7 +1,7 @@
 import Controller from './controller/Controller';
 import InputView from './views/InputView';
 import OutputView from './views/OutputView';
-import MENU_BOARD from './constants/menuBoard';
+import { MENU_BOARD } from './constants/menuBoard';
 import Order from './model/Order';
 import Benefit from './model/Benefit';
 import Badge from './model/Badge';

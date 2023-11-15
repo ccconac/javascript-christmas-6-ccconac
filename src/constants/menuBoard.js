@@ -33,4 +33,8 @@ const MENU_BOARD = Object.freeze([
   },
 ]);
 
-export default MENU_BOARD;
+const CATEGORY = Object.freeze({
+  beverage: '음료',
+});
+
+export { MENU_BOARD, CATEGORY };

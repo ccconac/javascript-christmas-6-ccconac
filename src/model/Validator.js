@@ -1,4 +1,8 @@
 import { ERROR_MESSAGE } from '../constants/messages';
+import { CATEGORY } from '../constants/menuBoard';
+import { DATE_RANGE } from '../constants/date';
+import CONSTANTS from '../constants/constants';
+import REGEXP from '../constants/regexp';
 
 class Validator {
   static dateValidator(reservationDate) {
@@ -16,15 +20,17 @@ class Validator {
   }
 
   static #validateNumber(reservationDate) {
-    return /^[0-9]+$/.test(reservationDate);
+    return REGEXP.numberRegexp.test(reservationDate);
   }
 
   static #validateDateRange(reservationDate) {
-    return reservationDate > 0 && reservationDate < 32;
+    return (
+      reservationDate >= DATE_RANGE.start && reservationDate <= DATE_RANGE.end
+    );
   }
 
   static #validateForm(order) {
-    return /^([가-힣]+-\d+,)*[가-힣]+-\d+$/.test(order);
+    return REGEXP.orderFormRegexp.test(order);
   }
 
   static #validateMenuName(menuBoard, orderedMenus) {
@@ -34,7 +40,7 @@ class Validator {
   }
 
   static #validateMenuCount(orderedMenus) {
-    return orderedMenus.every(([, count]) => count > 0);
+    return orderedMenus.every(([, count]) => count > CONSTANTS.zero);
   }
 
   static #validateDuplicateMenu(orderedMenus) {
@@ -44,15 +50,20 @@ class Validator {
 
   static #validateTotalCount(orderedMenus) {
     const menuCounts = orderedMenus.map(([, count]) => count);
-    const totalMenu = menuCounts.reduce((sum, count) => sum + count, 0);
-    return totalMenu > 20;
+    const totalMenu = menuCounts.reduce(
+      (sum, count) => sum + count,
+      CONSTANTS.zero,
+    );
+
+    return totalMenu > CONSTANTS.maxMenuCount;
   }
 
   static #validateOnlyDrink(menuBoard, orderedMenus) {
     const menuNames = orderedMenus.map(([name]) => name);
     const isOnlyDrink = menuNames.every(menuName =>
       menuBoard.some(
-        category => category.category === '음료' && menuName in category.menu,
+        category =>
+          category.category === CATEGORY.beverage && menuName in category.menu,
       ),
     );
 

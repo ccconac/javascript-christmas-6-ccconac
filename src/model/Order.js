@@ -1,5 +1,5 @@
 import Validator from './Validator';
-import MENU_BOARD from '../constants/menuBoard';
+import { MENU_BOARD } from '../constants/menuBoard';
 
 class Menu {
   #menuBoard;

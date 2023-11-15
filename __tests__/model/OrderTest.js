@@ -1,5 +1,5 @@
 import Order from '../../src/model/Order';
-import MENU_BOARD from '../../src/constants/menuBoard';
+import { MENU_BOARD } from '../../src/constants/menuBoard';
 
 describe('주문 클래스 테스트', () => {
   let order;

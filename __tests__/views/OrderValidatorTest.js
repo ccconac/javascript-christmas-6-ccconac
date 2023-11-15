@@ -1,6 +1,6 @@
 import Validator from '../../src/model/Validator';
 import { ERROR_MESSAGE } from '../../src/constants/messages';
-import MENU_BOARD from '../../src/constants/menuBoard';
+import { MENU_BOARD } from '../../src/constants/menuBoard';
 
 describe('주문 검증 테스트', () => {
   let validator;

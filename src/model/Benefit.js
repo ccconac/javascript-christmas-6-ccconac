@@ -1,9 +1,5 @@
-import MENU_BOARD from '../constants/menuBoard';
-import {
-  WEEKEND_EVENT,
-  WEEKDAY_EVENT,
-  SPECIAL_EVENT,
-} from '../constants/eventDate';
+import { MENU_BOARD } from '../constants/menuBoard';
+import { WEEKEND_EVENT, WEEKDAY_EVENT, SPECIAL_EVENT } from '../constants/date';
 
 class Benefit {
   christmasDiscount(reservationDate, totalPrice) {
