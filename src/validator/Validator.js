@@ -1,9 +1,9 @@
 import { ERROR_MESSAGE } from '../constants/messages';
 
 class Validator {
-  static dateValidator(date) {
-    this.#numberValidator(date);
-    this.#dateRangeValidator(date);
+  static dateValidator(reservationDate) {
+    this.#numberValidator(reservationDate);
+    this.#dateRangeValidator(reservationDate);
   }
 
   static menuValidator(order, menuBoard, orderedMenus) {
@@ -15,12 +15,12 @@ class Validator {
     this.#onlyDrinkValidator(menuBoard, orderedMenus);
   }
 
-  static #validateNumber(date) {
-    return /^[0-9]+$/.test(date);
+  static #validateNumber(reservationDate) {
+    return /^[0-9]+$/.test(reservationDate);
   }
 
-  static #validateDateRange(date) {
-    return date > 0 && date < 32;
+  static #validateDateRange(reservationDate) {
+    return reservationDate > 0 && reservationDate < 32;
   }
 
   static #validateForm(order) {
@@ -59,14 +59,14 @@ class Validator {
     return isOnlyDrink;
   }
 
-  static #numberValidator(date) {
-    if (!Validator.#validateNumber(date)) {
+  static #numberValidator(reservationDate) {
+    if (!Validator.#validateNumber(reservationDate)) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
   }
 
-  static #dateRangeValidator(date) {
-    if (!Validator.#validateDateRange(date)) {
+  static #dateRangeValidator(reservationDate) {
+    if (!Validator.#validateDateRange(reservationDate)) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
   }
