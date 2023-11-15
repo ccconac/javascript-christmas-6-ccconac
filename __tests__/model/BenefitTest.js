@@ -166,11 +166,40 @@ describe('혜택 클래스 테스트', () => {
 
       expect(result).toEqual(-31246);
     });
+
+    test('혜택이 적용되지 않은 경우 올바르게 계산하는지 확인한다.', () => {
+      const result = benefit.circulateBenefit(
+        26,
+        [['타파스', 1]],
+        5500,
+        '없음',
+      );
+
+      expect(result).toEqual(0);
+    });
   });
 
-  test('혜택이 적용되지 않은 경우 올바르게 계산하는지 확인한다.', () => {
-    const result = benefit.circulateBenefit(26, [['타파스', 1]], 5500, '없음');
+  describe('circulateAfterTotal() 메소드 테스트', () => {
+    test('할인 후 예상 결제 금액을 올바르게 계산하는지 확인한다.', () => {
+      const result = benefit.circulateAfterTotal(
+        3,
+        [
+          ['티본스테이크', 1],
+          ['바비큐립', 1],
+          ['초코케이크', 2],
+          ['제로콜라', 1],
+        ],
+        142000,
+        '샴페인 1개',
+      );
 
-    expect(result).toEqual(0);
+      expect(result).toEqual(135754);
+    });
+
+    test('할인 후 예상 결제 금액을 올바르게 계산하는지 확인한다.', () => {
+      const result = benefit.circulateAfterTotal(26, [['타파스', 1]], 5500);
+
+      expect(result).toEqual(5500);
+    });
   });
 });
