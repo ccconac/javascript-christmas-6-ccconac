@@ -10,6 +10,7 @@ const EVENT = Object.freeze({
   weekDiscount: -2_023,
   specialDiscount: -1_000,
   giveawayEvent: -25_000,
+  zero: 0,
   none: '없음',
   giveaway: '샴페인 1개',
 });

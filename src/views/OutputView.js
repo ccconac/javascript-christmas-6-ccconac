@@ -1,6 +1,9 @@
 import { Console } from '@woowacourse/mission-utils';
-import { OUTPUT_MESSAGE, DISCOUNT_OUTPUT } from '../constants/messages';
-import TITLE from '../constants/title';
+import {
+  OUTPUT_MESSAGE,
+  DISCOUNT_OUTPUT,
+  TITLE_OUTPUT,
+} from '../constants/messages';
 
 const OutputView = {
   printErrorMessage(message) {
@@ -16,24 +19,24 @@ const OutputView = {
   },
 
   printMenu(orderedMenus) {
-    Console.print(TITLE.orderMenu);
+    Console.print(TITLE_OUTPUT.orderMenu);
     orderedMenus.forEach(([menuName, count]) => {
       Console.print(OUTPUT_MESSAGE.orderedMenus(menuName, count));
     });
   },
 
   printBeforeTotal(orderAmount) {
-    Console.print(TITLE.beforeTotalPrice);
+    Console.print(TITLE_OUTPUT.beforeTotalPrice);
     Console.print(OUTPUT_MESSAGE.beforeTotalAmount(orderAmount));
   },
 
   printGiveaway(giveaway) {
-    Console.print(TITLE.giveawayMenu);
+    Console.print(TITLE_OUTPUT.giveawayMenu);
     Console.print(OUTPUT_MESSAGE.giveawayEvent(giveaway));
   },
 
   printEvent() {
-    Console.print(TITLE.benefitDetails);
+    Console.print(TITLE_OUTPUT.benefitDetails);
   },
 
   printChristmasEvent(christmasEvent) {
@@ -61,17 +64,17 @@ const OutputView = {
   },
 
   printBenefit(benefit) {
-    Console.print(TITLE.totalBenefit);
+    Console.print(TITLE_OUTPUT.totalBenefit);
     Console.print(OUTPUT_MESSAGE.totalBenefit(benefit));
   },
 
   printAfterTotal(amount) {
-    Console.print(TITLE.paymentAmount);
+    Console.print(TITLE_OUTPUT.paymentAmount);
     Console.print(OUTPUT_MESSAGE.paymentAmount(amount));
   },
 
   printBadge(badge) {
-    Console.print(TITLE.eventBadge);
+    Console.print(TITLE_OUTPUT.eventBadge);
     Console.print(OUTPUT_MESSAGE.eventBadge(badge));
   },
 };

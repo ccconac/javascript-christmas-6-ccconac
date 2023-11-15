@@ -23,6 +23,16 @@ const DISCOUNT_OUTPUT = Object.freeze({
   none: '없음',
 });
 
+const TITLE_OUTPUT = Object.freeze({
+  orderMenu: '<주문 메뉴>',
+  beforeTotalPrice: '\n<할인 전 총주문 금액>',
+  giveawayMenu: '\n<증정 메뉴>',
+  benefitDetails: '\n<혜택 내역>',
+  totalBenefit: '\n<총혜택 금액>',
+  paymentAmount: '\n<할인 후 예상 결제 금액>',
+  eventBadge: '\n<12월 이벤트 배지>',
+});
+
 const ERROR_PREFIX = '[ERROR]';
 
 const ERROR_MESSAGE = Object.freeze({
@@ -32,4 +42,4 @@ const ERROR_MESSAGE = Object.freeze({
   needExtraMenu: `${ERROR_PREFIX} 음료 외 다른 메뉴 주문이 추가로 필요합니다.`,
 });
 
-export { INPUT_MESSAGE, OUTPUT_MESSAGE, DISCOUNT_OUTPUT, ERROR_MESSAGE };
+export { INPUT_MESSAGE, OUTPUT_MESSAGE, DISCOUNT_OUTPUT, TITLE_OUTPUT, ERROR_MESSAGE };

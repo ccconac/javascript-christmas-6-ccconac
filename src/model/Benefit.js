@@ -39,7 +39,7 @@ class Benefit {
     return menuNames.reduce((itemCount, menu, index) => {
       if (menuItems.includes(menu)) return itemCount + menuCounts[index];
       return itemCount;
-    }, 0);
+    }, EVENT.zero);
   }
 
   christmasDiscount(reservationDate, totalAmount) {
@@ -47,7 +47,7 @@ class Benefit {
     const eventDate = Benefit.#isEventDate(reservationDate, CHRISTMAS_EVENT);
 
     if (benefitAmount && eventDate) {
-      return EVENT.christmasDiscount(reservationDate) || 0;
+      return EVENT.christmasDiscount(reservationDate) || EVENT.zero;
     }
 
     return false;
@@ -58,7 +58,10 @@ class Benefit {
     const eventDate = Benefit.#isEventDate(reservationDate, WEEKEND_EVENT);
 
     if (benefitAmount && eventDate) {
-      return EVENT.weekDiscount * this.#countMenuItems(CATEGORY.dessert) || 0;
+      return (
+        EVENT.weekDiscount * this.#countMenuItems(CATEGORY.dessert) ||
+        EVENT.zero
+      );
     }
 
     return false;
@@ -69,7 +72,9 @@ class Benefit {
     const eventDate = Benefit.#isEventDate(reservationDate, WEEKDAY_EVENT);
 
     if (benefitAmount && eventDate) {
-      return EVENT.weekDiscount * this.#countMenuItems(CATEGORY.main) || 0;
+      return (
+        EVENT.weekDiscount * this.#countMenuItems(CATEGORY.main) || EVENT.zero
+      );
     }
 
     return false;
@@ -80,7 +85,7 @@ class Benefit {
     const eventDate = Benefit.#isEventDate(reservationDate, SPECIAL_EVENT);
 
     if (benefitAmount && eventDate) {
-      return EVENT.specialDiscount || 0;
+      return EVENT.specialDiscount || EVENT.zero;
     }
 
     return false;
@@ -88,7 +93,7 @@ class Benefit {
 
   giveawayEvent(giveaway) {
     if (giveaway === EVENT.none) return false;
-    return EVENT.giveawayEvent || 0;
+    return EVENT.giveawayEvent || EVENT.zero;
   }
 
   circulateBenefit(reservationDate, totalAmount, giveaway) {
