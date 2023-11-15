@@ -13,14 +13,6 @@ class Controller {
 
   #badge;
 
-  #reservationDate;
-
-  #orderedMenus;
-
-  #giveawayMenu;
-
-  #totalPrice;
-
   constructor(inputView, outputView, order, benefit, badge) {
     this.#inputView = inputView;
     this.#outputView = outputView;
@@ -31,15 +23,15 @@ class Controller {
 
   async startEvent() {
     this.#printGreetingMessage();
-    await this.#readReservationDate();
-    await this.#readMenus();
-    this.#printPreviewMessage();
-    this.#printOrderList();
+    const reservationDate = await this.#readReservationDate();
+    const orderedMenus = await this.#readMenus();
+    this.#printPreviewMessage(reservationDate);
+    this.#printOrderList(orderedMenus);
     this.#printBeforeTotalPrice();
     this.#printGivewayMenu();
-    this.#printBenefits();
-    this.#printTotalBenefit();
-    this.#printAfterTotalPrice();
+    this.#printBenefits(reservationDate);
+    this.#printTotalBenefit(reservationDate);
+    this.#printAfterTotalPrice(reservationDate);
     this.#printEventBadge();
   }
 
@@ -51,7 +43,6 @@ class Controller {
     return handleException(async () => {
       const reservationDate = await this.#inputView.readDate();
       Validator.dateValidator(reservationDate);
-      this.#reservationDate = reservationDate;
 
       return reservationDate;
     }, this.#outputView.printErrorMessage);
@@ -61,37 +52,35 @@ class Controller {
     return handleException(async () => {
       const order = await this.#inputView.readOrder();
       const orderedMenus = this.#order.getOrderedMenus(order);
-      this.#orderedMenus = orderedMenus;
 
       return orderedMenus;
     }, this.#outputView.printErrorMessage);
   }
 
-  #printPreviewMessage() {
-    this.#outputView.printPreview(this.#reservationDate);
+  #printPreviewMessage(reservationDate) {
+    this.#outputView.printPreview(reservationDate);
   }
 
-  #printOrderList() {
-    this.#outputView.printMenu(this.#orderedMenus);
+  #printOrderList(orderedMenus) {
+    this.#outputView.printMenu(orderedMenus);
   }
 
   #printBeforeTotalPrice() {
     const totalPrice = this.#order.getBeforeTotalAmount();
-    this.#totalPrice = totalPrice;
     const formatTotalPrice = formatPrice(totalPrice);
     this.#outputView.printBeforeTotal(formatTotalPrice);
   }
 
   #printGivewayMenu() {
     const giveawayMenu = this.#order.getGiveawayMenu();
-    this.#giveawayMenu = giveawayMenu;
     this.#outputView.printGiveaway(giveawayMenu);
   }
 
-  #applyChristmasDiscount() {
+  #applyChristmasDiscount(reservationDate) {
+    const totalPrice = this.#order.getBeforeTotalAmount();
     const discount = this.#benefit.christmasDiscount(
-      this.#reservationDate,
-      this.#totalPrice,
+      reservationDate,
+      totalPrice,
     );
 
     if (!discount) return false;
@@ -100,11 +89,9 @@ class Controller {
     return true;
   }
 
-  #applyWeekendDiscount() {
-    const discount = this.#benefit.weekendDiscount(
-      this.#reservationDate,
-      this.#totalPrice,
-    );
+  #applyWeekendDiscount(reservationDate) {
+    const totalPrice = this.#order.getBeforeTotalAmount();
+    const discount = this.#benefit.weekendDiscount(reservationDate, totalPrice);
 
     if (!discount) return false;
 
@@ -112,11 +99,9 @@ class Controller {
     return true;
   }
 
-  #applyWeekdayDiscount() {
-    const discount = this.#benefit.weekdayDiscount(
-      this.#reservationDate,
-      this.#totalPrice,
-    );
+  #applyWeekdayDiscount(reservationDate) {
+    const totalPrice = this.#order.getBeforeTotalAmount();
+    const discount = this.#benefit.weekdayDiscount(reservationDate, totalPrice);
 
     if (!discount) return false;
 
@@ -124,11 +109,9 @@ class Controller {
     return true;
   }
 
-  #applySpecialDiscount() {
-    const discount = this.#benefit.specialDiscount(
-      this.#reservationDate,
-      this.#totalPrice,
-    );
+  #applySpecialDiscount(reservationDate) {
+    const totalPrice = this.#order.getBeforeTotalAmount();
+    const discount = this.#benefit.specialDiscount(reservationDate, totalPrice);
 
     if (!discount) return false;
 
@@ -137,7 +120,8 @@ class Controller {
   }
 
   #applyGiveawayDiscount() {
-    const discount = this.#benefit.giveawayEvent(this.#giveawayMenu);
+    const giveawayMenu = this.#order.getGiveawayMenu();
+    const discount = this.#benefit.giveawayEvent(giveawayMenu);
 
     if (!discount) return false;
 
@@ -145,40 +129,44 @@ class Controller {
     return true;
   }
 
-  #printBenefits() {
+  #printBenefits(reservationDate) {
     this.#outputView.printEvent();
 
     let isNoBenefit = false;
 
-    isNoBenefit = this.#applyChristmasDiscount() || isNoBenefit;
-    isNoBenefit = this.#applyWeekendDiscount() || isNoBenefit;
-    isNoBenefit = this.#applyWeekdayDiscount() || isNoBenefit;
-    isNoBenefit = this.#applySpecialDiscount() || isNoBenefit;
+    isNoBenefit = this.#applyChristmasDiscount(reservationDate) || isNoBenefit;
+    isNoBenefit = this.#applyWeekendDiscount(reservationDate) || isNoBenefit;
+    isNoBenefit = this.#applyWeekdayDiscount(reservationDate) || isNoBenefit;
+    isNoBenefit = this.#applySpecialDiscount(reservationDate) || isNoBenefit;
     isNoBenefit = this.#applyGiveawayDiscount() || isNoBenefit;
 
     if (!isNoBenefit) this.#outputView.printNoBenefit();
   }
 
-  #calculateTotalBenefit() {
+  #calculateTotalBenefit(reservationDate) {
+    const totalPrice = this.#order.getBeforeTotalAmount();
+    const giveawayMenu = this.#order.getGiveawayMenu();
+
     return this.#benefit.circulateBenefit(
-      this.#reservationDate,
-      this.#totalPrice,
-      this.#giveawayMenu,
+      reservationDate,
+      totalPrice,
+      giveawayMenu,
     );
   }
 
-  #printTotalBenefit() {
-    const totalBenefit = this.#calculateTotalBenefit();
+  #printTotalBenefit(reservationDate) {
+    const totalBenefit = this.#calculateTotalBenefit(reservationDate);
     this.#outputView.printBenefit(formatPrice(totalBenefit));
   }
 
-  #printAfterTotalPrice() {
-    const totalPrice = this.#benefit.circulateAfterTotal(
-      this.#reservationDate,
-      this.#totalPrice,
+  #printAfterTotalPrice(reservationDate) {
+    const totalPrice = this.#order.getBeforeTotalAmount();
+    const afterTotalPrice = this.#benefit.circulateAfterTotal(
+      reservationDate,
+      totalPrice,
     );
 
-    this.#outputView.printAfterTotal(formatPrice(totalPrice));
+    this.#outputView.printAfterTotal(formatPrice(afterTotalPrice));
   }
 
   #printEventBadge() {
