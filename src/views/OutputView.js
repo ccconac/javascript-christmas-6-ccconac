@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { OUTPUT_MESSAGE } from '../constants/messages';
+import { OUTPUT_MESSAGE, DISCOUNT_OUTPUT } from '../constants/messages';
 import TITLE from '../constants/title';
 
 const OutputView = {
@@ -8,28 +8,28 @@ const OutputView = {
   },
 
   printGreeting() {
-    Console.print(OUTPUT_MESSAGE.start);
+    Console.print(OUTPUT_MESSAGE.greeting);
   },
 
-  printPreview(date) {
-    Console.print(OUTPUT_MESSAGE.preview(date));
+  printPreview(reservationDate) {
+    Console.print(OUTPUT_MESSAGE.preview(reservationDate));
   },
 
   printMenu(orderedMenus) {
     Console.print(TITLE.orderMenu);
-    orderedMenus.forEach(([name, count]) => {
-      Console.print(OUTPUT_MESSAGE.menu(name, count));
+    orderedMenus.forEach(([menuName, count]) => {
+      Console.print(OUTPUT_MESSAGE.orderedMenus(menuName, count));
     });
   },
 
-  printBeforeTotal(totalPrice) {
+  printBeforeTotal(orderAmount) {
     Console.print(TITLE.beforeTotalPrice);
-    Console.print(OUTPUT_MESSAGE.beforeTotalPrice(totalPrice));
+    Console.print(OUTPUT_MESSAGE.beforeTotalAmount(orderAmount));
   },
 
   printGiveaway(giveaway) {
     Console.print(TITLE.giveawayMenu);
-    Console.print(giveaway);
+    Console.print(OUTPUT_MESSAGE.giveawayEvent(giveaway));
   },
 
   printEvent() {
@@ -37,27 +37,27 @@ const OutputView = {
   },
 
   printChristmasEvent(christmasEvent) {
-    Console.print(OUTPUT_MESSAGE.christmasDiscount(christmasEvent));
+    Console.print(DISCOUNT_OUTPUT.christmasDiscount(christmasEvent));
   },
 
   printWeekendEvent(weekendEvent) {
-    Console.print(OUTPUT_MESSAGE.weekendDiscount(weekendEvent));
+    Console.print(DISCOUNT_OUTPUT.weekendDiscount(weekendEvent));
   },
 
   printWeekdayEvent(weekdayEvent) {
-    Console.print(OUTPUT_MESSAGE.weekdayDiscount(weekdayEvent));
+    Console.print(DISCOUNT_OUTPUT.weekdayDiscount(weekdayEvent));
   },
 
   printSpecialEvent(specialEvent) {
-    Console.print(OUTPUT_MESSAGE.specialDiscount(specialEvent));
+    Console.print(DISCOUNT_OUTPUT.specialDiscount(specialEvent));
   },
 
   printGiveawayEvent(giveawayEvent) {
-    Console.print(OUTPUT_MESSAGE.giveaway(giveawayEvent));
+    Console.print(DISCOUNT_OUTPUT.giftEvent(giveawayEvent));
   },
 
   printNoBenefit() {
-    Console.print(OUTPUT_MESSAGE.none);
+    Console.print(DISCOUNT_OUTPUT.none);
   },
 
   printBenefit(benefit) {
@@ -65,9 +65,9 @@ const OutputView = {
     Console.print(OUTPUT_MESSAGE.totalBenefit(benefit));
   },
 
-  printAfterTotal(payment) {
+  printAfterTotal(amount) {
     Console.print(TITLE.paymentAmount);
-    Console.print(OUTPUT_MESSAGE.paymentAmount(payment));
+    Console.print(OUTPUT_MESSAGE.paymentAmount(amount));
   },
 
   printBadge(badge) {

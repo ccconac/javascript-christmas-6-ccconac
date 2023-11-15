@@ -4,20 +4,22 @@ const INPUT_MESSAGE = Object.freeze({
 });
 
 const OUTPUT_MESSAGE = Object.freeze({
-  start: '안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.',
-  preview: date =>
-    `12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n`,
-  menu: (name, count) => `${name} ${count}개`,
-  beforeTotalPrice: totalPrice => `${totalPrice}원`,
-  christmasDiscount: christmasEvent =>
-    `크리스마스 디데이 할인: ${christmasEvent}원`,
+  greeting: '안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.',
+  preview: reservationDate => `12월 ${reservationDate}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n`,
+  orderedMenus: (menuName, count) => `${menuName} ${count}개`,
+  beforeTotalAmount: orderAmount => `${orderAmount}원`,
+  totalBenefit: benefit => `${benefit}원`,
+  paymentAmount: amount => `${amount}원`,
+  giveawayEvent: giveaway => `${giveaway}`,
+  eventBadge: badge => `${badge}`,
+});
+
+const DISCOUNT_OUTPUT = Object.freeze({
+  christmasDiscount: christmasEvent => `크리스마스 디데이 할인: ${christmasEvent}원`,
   weekendDiscount: weekendEvent => `평일 할인: ${weekendEvent}원`,
   weekdayDiscount: weekdayEvent => `주말 할인: ${weekdayEvent}원`,
   specialDiscount: specialEvent => `특별 할인: ${specialEvent}원`,
-  giveaway: giveawayEvent => `증정 이벤트: ${giveawayEvent}원`,
-  totalBenefit: benefit => `${benefit}원`,
-  paymentAmount: payment => `${payment}원`,
-  eventBadge: badge => `${badge}`,
+  giftEvent: giveawayEvent => `증정 이벤트: ${giveawayEvent}원`,
   none: '없음',
 });
 
@@ -30,4 +32,4 @@ const ERROR_MESSAGE = Object.freeze({
   invalidDrink: `${ERROR_PREFIX} 음료 외 다른 메뉴 주문이 추가로 필요합니다.`,
 });
 
-export { INPUT_MESSAGE, OUTPUT_MESSAGE, ERROR_MESSAGE };
+export { INPUT_MESSAGE, OUTPUT_MESSAGE, DISCOUNT_OUTPUT, ERROR_MESSAGE };
