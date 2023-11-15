@@ -1,92 +1,114 @@
-import { MENU_BOARD } from '../constants/menuBoard';
-import { WEEKEND_EVENT, WEEKDAY_EVENT, SPECIAL_EVENT } from '../constants/date';
+import { CATEGORY, MENU_BOARD } from '../constants/menuBoard';
+import {
+  CHRISTMAS_EVENT,
+  WEEKEND_EVENT,
+  WEEKDAY_EVENT,
+  SPECIAL_EVENT,
+} from '../constants/date';
+import { EVENT } from '../constants/constants';
 
 class Benefit {
-  christmasDiscount(reservationDate, totalPrice) {
-    if (reservationDate >= 1 && reservationDate <= 25 && totalPrice >= 10000) {
-      return -1000 - 100 * (reservationDate - 1);
+  constructor(order) {
+    this.order = order;
+  }
+
+  static #isMinEventAmount(totalAmount) {
+    return totalAmount >= EVENT.minEventAmount;
+  }
+
+  static #isEventDate(reservationDate, eventDates) {
+    return eventDates.some(date => Number(reservationDate) === date);
+  }
+
+  static #getCategoryMenus(category) {
+    const filterCategory = MENU_BOARD.filter(
+      menuBoard => menuBoard.category === category,
+    );
+
+    const categoryMenus = filterCategory.flatMap(menuBoard =>
+      Object.keys(menuBoard.menu),
+    );
+
+    return categoryMenus;
+  }
+
+  #countMenuItems(category) {
+    const menuItems = Benefit.#getCategoryMenus(category);
+    const { menuNames, menuCounts } = this.order.getMenuDetails();
+
+    return menuNames.reduce((itemCount, menu, index) => {
+      if (menuItems.includes(menu)) return itemCount + menuCounts[index];
+      return itemCount;
+    }, 0);
+  }
+
+  christmasDiscount(reservationDate, totalAmount) {
+    const benefitAmount = Benefit.#isMinEventAmount(totalAmount);
+    const eventDate = Benefit.#isEventDate(reservationDate, CHRISTMAS_EVENT);
+
+    if (benefitAmount && eventDate) {
+      return EVENT.christmasDiscount(reservationDate) || 0;
     }
+
     return false;
   }
 
-  weekendDiscount(reservationDate, orderedMenus, totalPrice) {
-    const dessertMenu = MENU_BOARD.filter(
-      category => category.category === '디저트',
-    ).flatMap(category => Object.keys(category.menu));
+  weekendDiscount(reservationDate, totalAmount) {
+    const benefitAmount = Benefit.#isMinEventAmount(totalAmount);
+    const eventDate = Benefit.#isEventDate(reservationDate, WEEKEND_EVENT);
 
-    let dessertCount = 0;
-    const menuNames = orderedMenus.map(([name]) => name);
-    const menuCounts = orderedMenus.map(([, count]) => count);
-
-    menuNames.forEach((menu, index) => {
-      if (dessertMenu.includes(menu)) dessertCount += 1 * menuCounts[index];
-    });
-
-    if (
-      WEEKEND_EVENT.some(date => Number(reservationDate) === date) &&
-      totalPrice >= 10000
-    ) {
-      return -2023 * dessertCount;
+    if (benefitAmount && eventDate) {
+      return EVENT.weekDiscount * this.#countMenuItems(CATEGORY.dessert) || 0;
     }
+
     return false;
   }
 
-  weekdayDiscount(reservationDate, orderedMenus, totalPrice) {
-    const mainMenu = MENU_BOARD.filter(
-      category => category.category === '메인',
-    ).flatMap(category => Object.keys(category.menu));
+  weekdayDiscount(reservationDate, totalAmount) {
+    const benefitAmount = Benefit.#isMinEventAmount(totalAmount);
+    const eventDate = Benefit.#isEventDate(reservationDate, WEEKDAY_EVENT);
 
-    let mainCount = 0;
-
-    const menuNames = orderedMenus.map(([name]) => name);
-    const menuCounts = orderedMenus.map(([, count]) => count);
-
-    menuNames.forEach((menu, index) => {
-      if (mainMenu.includes(menu)) mainCount += 1 * menuCounts[index];
-    });
-
-    if (
-      WEEKDAY_EVENT.some(date => Number(reservationDate) === date) &&
-      totalPrice >= 10000
-    ) {
-      return -2023 * mainCount;
+    if (benefitAmount && eventDate) {
+      return EVENT.weekDiscount * this.#countMenuItems(CATEGORY.main) || 0;
     }
+
     return false;
   }
 
-  specialDiscount(reservationDate, totalPrice) {
-    if (
-      SPECIAL_EVENT.some(date => Number(reservationDate) === date) &&
-      totalPrice >= 10000
-    ) {
-      return -1000;
+  specialDiscount(reservationDate, totalAmount) {
+    const benefitAmount = Benefit.#isMinEventAmount(totalAmount);
+    const eventDate = Benefit.#isEventDate(reservationDate, SPECIAL_EVENT);
+
+    if (benefitAmount && eventDate) {
+      return EVENT.specialDiscount || 0;
     }
+
     return false;
   }
 
   giveawayEvent(giveaway) {
-    if (giveaway === '없음') return false;
-    return -25000;
+    if (giveaway === EVENT.none) return false;
+    return EVENT.giveawayEvent || 0;
   }
 
-  circulateBenefit(reservationDate, orderedMenus, totalPrice, giveaway) {
+  circulateBenefit(reservationDate, totalAmount, giveaway) {
     const totalBenefit =
-      (this.christmasDiscount(reservationDate, totalPrice) || 0) +
-      (this.weekendDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
-      (this.weekdayDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
-      (this.specialDiscount(reservationDate, totalPrice) || 0) +
-      (this.giveawayEvent(giveaway) || 0);
+      this.christmasDiscount(reservationDate, totalAmount) +
+      this.weekendDiscount(reservationDate, totalAmount) +
+      this.weekdayDiscount(reservationDate, totalAmount) +
+      this.specialDiscount(reservationDate, totalAmount) +
+      this.giveawayEvent(giveaway);
 
     return totalBenefit;
   }
 
-  circulateAfterTotal(reservationDate, orderedMenus, totalPrice) {
+  circulateAfterTotal(reservationDate, totalAmount) {
     const paymentAmount =
-      totalPrice +
-      (this.christmasDiscount(reservationDate, totalPrice) || 0) +
-      (this.weekendDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
-      (this.weekdayDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
-      (this.specialDiscount(reservationDate, totalPrice) || 0);
+      totalAmount +
+      this.christmasDiscount(reservationDate, totalAmount) +
+      this.weekendDiscount(reservationDate, totalAmount) +
+      this.weekdayDiscount(reservationDate, totalAmount) +
+      this.specialDiscount(reservationDate, totalAmount);
 
     return paymentAmount;
   }

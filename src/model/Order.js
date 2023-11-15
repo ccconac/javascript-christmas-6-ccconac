@@ -1,6 +1,6 @@
 import Validator from './Validator';
 import { MENU_BOARD } from '../constants/menuBoard';
-import CONSTANTS from '../constants/constants';
+import { MAGIC_NUMBER, EVENT } from '../constants/constants';
 
 class Order {
   #orderedMenus;
@@ -61,8 +61,8 @@ class Order {
   }
 
   getGiveawayMenu() {
-    if (this.#totalAmount < CONSTANTS.giveawayPrice) return CONSTANTS.none;
-    return CONSTANTS.giveaway;
+    if (this.#totalAmount < EVENT.minGiveawayAmount) return EVENT.none;
+    return EVENT.giveaway;
   }
 }
 

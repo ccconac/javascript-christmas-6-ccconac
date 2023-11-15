@@ -101,7 +101,6 @@ class Controller {
   #applyWeekendDiscount() {
     const discount = this.#benefit.weekendDiscount(
       this.#reservationDate,
-      this.#orderedMenus,
       this.#totalPrice,
     );
 
@@ -114,7 +113,6 @@ class Controller {
   #applyWeekdayDiscount() {
     const discount = this.#benefit.weekdayDiscount(
       this.#reservationDate,
-      this.#orderedMenus,
       this.#totalPrice,
     );
 
@@ -162,7 +160,6 @@ class Controller {
   #printTotalBenefit() {
     const totalBenefit = this.#benefit.circulateBenefit(
       this.#reservationDate,
-      this.#orderedMenus,
       this.#totalPrice,
       this.#giveawayMenu,
     );
@@ -173,7 +170,6 @@ class Controller {
   #printAfterTotalPrice() {
     const totalPrice = this.#benefit.circulateAfterTotal(
       this.#reservationDate,
-      this.#orderedMenus,
       this.#totalPrice,
     );
 
@@ -183,7 +179,6 @@ class Controller {
   #printEventBadge() {
     const totalBenefit = this.#benefit.circulateBenefit(
       this.#reservationDate,
-      this.#orderedMenus,
       this.#totalPrice,
       this.#giveawayMenu,
     );

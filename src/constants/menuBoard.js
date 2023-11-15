@@ -35,6 +35,8 @@ const MENU_BOARD = Object.freeze([
 
 const CATEGORY = Object.freeze({
   beverage: '음료',
+  dessert: '디저트',
+  main: '메인',
 });
 
 export { MENU_BOARD, CATEGORY };

@@ -7,13 +7,16 @@ import Badge from './model/Badge';
 
 class App {
   #order;
+
   #benefit;
+
   #badge;
+
   #controller;
 
   constructor() {
     this.#order = new Order();
-    this.#benefit = new Benefit();
+    this.#benefit = new Benefit(this.#order);
     this.#badge = new Badge();
 
     this.#controller = new Controller(

@@ -1,7 +1,7 @@
 import { ERROR_MESSAGE } from '../constants/messages';
 import { CATEGORY } from '../constants/menuBoard';
 import { DATE_RANGE } from '../constants/date';
-import CONSTANTS from '../constants/constants';
+import { MAGIC_NUMBER } from '../constants/constants';
 import REGEXP from '../constants/regexp';
 
 class Validator {
@@ -40,7 +40,7 @@ class Validator {
   }
 
   static #validateMenuCount(orderedMenus) {
-    return orderedMenus.every(([, count]) => count > CONSTANTS.zero);
+    return orderedMenus.every(([, count]) => count > MAGIC_NUMBER.zero);
   }
 
   static #validateDuplicateMenu(orderedMenus) {
@@ -52,10 +52,10 @@ class Validator {
     const menuCounts = orderedMenus.map(([, count]) => count);
     const totalMenu = menuCounts.reduce(
       (sum, count) => sum + count,
-      CONSTANTS.zero,
+      MAGIC_NUMBER.zero,
     );
 
-    return totalMenu > CONSTANTS.maxMenuCount;
+    return totalMenu > MAGIC_NUMBER.maxMenuCount;
   }
 
   static #validateOnlyDrink(menuBoard, orderedMenus) {
