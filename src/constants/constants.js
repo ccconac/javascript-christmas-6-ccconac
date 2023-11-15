@@ -14,4 +14,14 @@ const EVENT = Object.freeze({
   giveaway: '샴페인 1개',
 });
 
-export { MAGIC_NUMBER, EVENT };
+const BADGE = Object.freeze({
+  starBadgeAmount: 5_000,
+  treeBadgeAmount: 10_000,
+  santaBadgeAmount: 20_000,
+  starBadge: '별',
+  treeBadge: '트리',
+  santaBadge: '산타',
+  noBadge: '없음',
+});
+
+export { MAGIC_NUMBER, EVENT, BADGE };

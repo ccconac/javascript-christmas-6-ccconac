@@ -1,9 +1,11 @@
+import { BADGE } from '../constants/constants';
+
 class Badge {
   eventBadge(benefit) {
-    if (-benefit < 5000) return '없음';
-    if (-benefit >= 20000) return '산타';
-    if (-benefit >= 10000) return '트리';
-    if (-benefit >= 5000) return '별';
+    if (-benefit < BADGE.starBadgeAmount) return BADGE.noBadge;
+    if (-benefit >= BADGE.santaBadgeAmount) return BADGE.santaBadge;
+    if (-benefit >= BADGE.treeBadgeAmount) return BADGE.treeBadge;
+    if (-benefit >= BADGE.starBadgeAmount) return BADGE.starBadge;
   }
 }
 
