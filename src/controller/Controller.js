@@ -54,7 +54,7 @@ class Controller {
 
   async #readMenus() {
     while (true) {
-      const order = await this.#inputView.readMenu();
+      const order = await this.#inputView.readOrder();
       try {
         const orderedMenus = this.#order.getOrderedMenus(order);
         this.#orderedMenus = orderedMenus;

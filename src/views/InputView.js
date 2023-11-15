@@ -3,13 +3,13 @@ import { INPUT_MESSAGE } from '../constants/messages';
 
 const InputView = {
   async readDate() {
-    const inputDate = await Console.readLineAsync(INPUT_MESSAGE.date);
+    const inputDate = await Console.readLineAsync(INPUT_MESSAGE.reservationDate);
     return inputDate;
   },
 
-  async readMenu() {
-    const inputMenu = await Console.readLineAsync(INPUT_MESSAGE.menu);
-    return inputMenu;
+  async readOrder() {
+    const inputOrder = await Console.readLineAsync(INPUT_MESSAGE.orderMenu);
+    return inputOrder;
   },
 };
 
