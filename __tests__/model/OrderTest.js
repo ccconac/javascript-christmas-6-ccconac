@@ -22,14 +22,14 @@ describe('주문 클래스 테스트', () => {
 
   test('사용자가 주문한 할인 전 총주문 금액을 올바르게 계산하는지 확인한다.', () => {
     order.getOrderedMenus(orderMenus);
-    const result = order.circulateBeforeTotal();
+    const result = order.getBeforeTotalAmount();
 
     expect(result).toEqual(142000);
   });
 
   test('할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개를 증정하는지 확인한다.', () => {
     order.getOrderedMenus(orderMenus);
-    order.circulateBeforeTotal();
+    order.getBeforeTotalAmount();
     const result = order.getGiveawayMenu();
 
     expect(result).toEqual('샴페인 1개');
@@ -38,7 +38,7 @@ describe('주문 클래스 테스트', () => {
   test('증정 이벤트에 해당하지 않는 경우, 증정 메뉴 `없음`을 보여 주는지 확인한다.', () => {
     orderMenus = '티본스테이크-1,제로콜라-1';
     order.getOrderedMenus(orderMenus);
-    order.circulateBeforeTotal();
+    order.getBeforeTotalAmount();
     const result = order.getGiveawayMenu();
 
     expect(result).toEqual('없음');

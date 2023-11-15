@@ -1,7 +1,6 @@
 import Controller from './controller/Controller';
 import InputView from './views/InputView';
 import OutputView from './views/OutputView';
-import { MENU_BOARD } from './constants/menuBoard';
 import Order from './model/Order';
 import Benefit from './model/Benefit';
 import Badge from './model/Badge';
@@ -13,7 +12,7 @@ class App {
   #controller;
 
   constructor() {
-    this.#order = new Order(MENU_BOARD);
+    this.#order = new Order();
     this.#benefit = new Benefit();
     this.#badge = new Badge();
 

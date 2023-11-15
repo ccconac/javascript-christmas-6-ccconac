@@ -1,51 +1,69 @@
 import Validator from './Validator';
 import { MENU_BOARD } from '../constants/menuBoard';
+import CONSTANTS from '../constants/constants';
 
-class Menu {
-  #menuBoard;
+class Order {
   #orderedMenus;
-  #totalPrice;
 
-  constructor(menuBoard) {
-    this.#menuBoard = menuBoard;
+  #totalAmount;
+
+  constructor() {
     this.#orderedMenus = [];
   }
 
   getOrderedMenus(order) {
     this.#setMenus(order);
-    Validator.menuValidator(order, this.#menuBoard, this.#orderedMenus);
+    Validator.menuValidator(order, MENU_BOARD, this.#orderedMenus);
 
     return this.#orderedMenus;
   }
 
+  #getMenuNames() {
+    return this.#orderedMenus.map(([name]) => name);
+  }
+
+  #getMenuCounts() {
+    return this.#orderedMenus.map(([, count]) => count);
+  }
+
+  getMenuDetails() {
+    return {
+      menuNames: this.#getMenuNames(),
+      menuCounts: this.#getMenuCounts(),
+    };
+  }
+
   #setMenus(order) {
     this.#orderedMenus = [];
+
     const menus = order.split(',').map(menu => {
       const [name, count] = menu.split('-');
       return [name, Number(count)];
     });
 
-    this.#orderedMenus.push(...menus);
+    this.#orderedMenus = this.#orderedMenus.concat(menus);
   }
 
-  circulateBeforeTotal() {
-    const menuNames = this.#orderedMenus.map(([name]) => name);
-    const menuCounts = this.#orderedMenus.map(([, count]) => count);
+  #calculateTotalAmount() {
+    const { menuNames, menuCounts } = this.getMenuDetails();
 
-    this.#totalPrice = menuNames.reduce((sum, menuName, index) => {
+    return menuNames.reduce((sum, menuName, index) => {
       const category = MENU_BOARD.find(menuBoard => menuName in menuBoard.menu);
-      sum += category.menu[menuName] * menuCounts[index];
+      const totalAmount = sum + category.menu[menuName] * menuCounts[index];
 
-      return sum;
+      return totalAmount;
     }, 0);
+  }
 
-    return this.#totalPrice;
+  getBeforeTotalAmount() {
+    this.#totalAmount = this.#calculateTotalAmount();
+    return this.#totalAmount;
   }
 
   getGiveawayMenu() {
-    if (this.#totalPrice < 120000) return '없음';
-    return '샴페인 1개';
+    if (this.#totalAmount < CONSTANTS.giveawayPrice) return CONSTANTS.none;
+    return CONSTANTS.giveaway;
   }
 }
 
-export default Menu;
+export default Order;

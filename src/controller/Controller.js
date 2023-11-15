@@ -74,7 +74,7 @@ class Controller {
   }
 
   #printBeforeTotalPrice() {
-    const totalPrice = this.#order.circulateBeforeTotal();
+    const totalPrice = this.#order.getBeforeTotalAmount();
     this.#totalPrice = totalPrice;
     const formatTotalPrice = formatPrice(totalPrice);
     this.#outputView.printBeforeTotal(formatTotalPrice);
