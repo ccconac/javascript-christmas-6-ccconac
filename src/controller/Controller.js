@@ -4,14 +4,21 @@ import handleException from '../utils/handleException';
 
 class Controller {
   #inputView;
+
   #outputView;
+
   #order;
+
   #benefit;
+
   #badge;
 
   #reservationDate;
+
   #orderedMenus;
+
   #giveawayMenu;
+
   #totalPrice;
 
   constructor(inputView, outputView, order, benefit, badge) {
@@ -152,13 +159,16 @@ class Controller {
     if (!isNoBenefit) this.#outputView.printNoBenefit();
   }
 
-  #printTotalBenefit() {
-    const totalBenefit = this.#benefit.circulateBenefit(
+  #calculateTotalBenefit() {
+    return this.#benefit.circulateBenefit(
       this.#reservationDate,
       this.#totalPrice,
       this.#giveawayMenu,
     );
+  }
 
+  #printTotalBenefit() {
+    const totalBenefit = this.#calculateTotalBenefit();
     this.#outputView.printBenefit(formatPrice(totalBenefit));
   }
 
@@ -172,12 +182,7 @@ class Controller {
   }
 
   #printEventBadge() {
-    const totalBenefit = this.#benefit.circulateBenefit(
-      this.#reservationDate,
-      this.#totalPrice,
-      this.#giveawayMenu,
-    );
-
+    const totalBenefit = this.#calculateTotalBenefit();
     const eventBadge = this.#badge.eventBadge(totalBenefit);
     this.#outputView.printBadge(eventBadge);
   }
