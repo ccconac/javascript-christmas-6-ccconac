@@ -29,7 +29,7 @@ const ERROR_MESSAGE = Object.freeze({
   invalidDate: `${ERROR_PREFIX} 유효하지 않은 날짜입니다. 다시 입력해 주세요.`,
   invalidOrder: `${ERROR_PREFIX} 유효하지 않은 주문입니다. 다시 입력해 주세요.`,
   invalidTotal: `${ERROR_PREFIX} 메뉴는 총 20개까지만 주문 가능합니다. 다시 입력해 주세요.`,
-  invalidDrink: `${ERROR_PREFIX} 음료 외 다른 메뉴 주문이 추가로 필요합니다.`,
+  needExtraMenu: `${ERROR_PREFIX} 음료 외 다른 메뉴 주문이 추가로 필요합니다.`,
 });
 
 export { INPUT_MESSAGE, OUTPUT_MESSAGE, DISCOUNT_OUTPUT, ERROR_MESSAGE };

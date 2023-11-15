@@ -77,7 +77,7 @@ class Validator {
     }
 
     if (Validator.#validateOnlyDrink(menuBoard, orderedMenus)) {
-      throw new Error(ERROR_MESSAGE.invalidDrink);
+      throw new Error(ERROR_MESSAGE.needExtraMenu);
     }
   }
 }
