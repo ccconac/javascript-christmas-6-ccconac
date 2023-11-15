@@ -1,5 +1,6 @@
 import Validator from '../model/Validator';
 import formatPrice from '../utils/formatPrice';
+import handleException from '../utils/handleException';
 
 class Controller {
   #inputView;
@@ -40,29 +41,23 @@ class Controller {
   }
 
   async #readReservationDate() {
-    while (true) {
+    return handleException(async () => {
       const reservationDate = await this.#inputView.readDate();
-      try {
-        Validator.dateValidator(reservationDate);
-        this.#reservationDate = reservationDate;
-        return reservationDate;
-      } catch ({ message }) {
-        this.#outputView.printErrorMessage(message);
-      }
-    }
+      Validator.dateValidator(reservationDate);
+      this.#reservationDate = reservationDate;
+
+      return reservationDate;
+    }, this.#outputView.printErrorMessage);
   }
 
   async #readMenus() {
-    while (true) {
+    return handleException(async () => {
       const order = await this.#inputView.readOrder();
-      try {
-        const orderedMenus = this.#order.getOrderedMenus(order);
-        this.#orderedMenus = orderedMenus;
-        return orderedMenus;
-      } catch ({ message }) {
-        this.#outputView.printErrorMessage(message);
-      }
-    }
+      const orderedMenus = this.#order.getOrderedMenus(order);
+      this.#orderedMenus = orderedMenus;
+
+      return orderedMenus;
+    }, this.#outputView.printErrorMessage);
   }
 
   #printPreviewMessage() {
