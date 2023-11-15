@@ -83,6 +83,17 @@ class Benefit {
 
     return totalBenefit;
   }
+
+  circulateAfterTotal(reservationDate, orderedMenus, totalPrice) {
+    const paymentAmount =
+      totalPrice +
+      (this.christmasDiscount(reservationDate, totalPrice) || 0) +
+      (this.weekendDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
+      (this.weekdayDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
+      (this.specialDiscount(reservationDate, totalPrice) || 0);
+
+    return paymentAmount;
+  }
 }
 
 export default Benefit;

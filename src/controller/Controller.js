@@ -29,6 +29,7 @@ class Controller {
     this.#printGivewayMenu();
     this.#printBenefits();
     this.#printTotalBenefit();
+    this.#printAfterTotalPrice();
   }
 
   #printGreetingMessage() {
@@ -164,6 +165,16 @@ class Controller {
     );
 
     this.#outputView.printBenefit(formatPrice(totalBenefit));
+  }
+
+  #printAfterTotalPrice() {
+    const totalPrice = this.#benefit.circulateAfterTotal(
+      this.#reservationDate,
+      this.#orderedMenus,
+      this.#totalPrice,
+    );
+
+    this.#outputView.printAfterTotal(formatPrice(totalPrice));
   }
 }
 

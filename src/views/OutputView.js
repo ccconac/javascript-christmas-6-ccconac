@@ -64,6 +64,11 @@ const OutputView = {
     Console.print(TITLE.totalBenefit);
     Console.print(OUTPUT_MESSAGE.totalBenefit(benefit));
   },
+
+  printAfterTotal(payment) {
+    Console.print(TITLE.paymentAmount);
+    Console.print(OUTPUT_MESSAGE.paymentAmount(payment));
+  },
 };
 
 export default OutputView;
