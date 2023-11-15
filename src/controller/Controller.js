@@ -6,17 +6,19 @@ class Controller {
   #outputView;
   #order;
   #benefit;
+  #badge;
 
   #reservationDate;
   #orderedMenus;
   #giveawayMenu;
   #totalPrice;
 
-  constructor(inputView, outputView, order, benefit) {
+  constructor(inputView, outputView, order, benefit, badge) {
     this.#inputView = inputView;
     this.#outputView = outputView;
     this.#order = order;
     this.#benefit = benefit;
+    this.#badge = badge;
   }
 
   async startEvent() {
@@ -30,6 +32,7 @@ class Controller {
     this.#printBenefits();
     this.#printTotalBenefit();
     this.#printAfterTotalPrice();
+    this.#printEventBadge();
   }
 
   #printGreetingMessage() {
@@ -175,6 +178,18 @@ class Controller {
     );
 
     this.#outputView.printAfterTotal(formatPrice(totalPrice));
+  }
+
+  #printEventBadge() {
+    const totalBenefit = this.#benefit.circulateBenefit(
+      this.#reservationDate,
+      this.#orderedMenus,
+      this.#totalPrice,
+      this.#giveawayMenu,
+    );
+
+    const eventBadge = this.#badge.eventBadge(totalBenefit);
+    this.#outputView.printBadge(eventBadge);
   }
 }
 

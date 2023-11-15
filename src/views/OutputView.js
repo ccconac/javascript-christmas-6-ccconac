@@ -69,6 +69,11 @@ const OutputView = {
     Console.print(TITLE.paymentAmount);
     Console.print(OUTPUT_MESSAGE.paymentAmount(payment));
   },
+
+  printBadge(badge) {
+    Console.print(TITLE.eventBadge);
+    Console.print(OUTPUT_MESSAGE.eventBadge(badge));
+  },
 };
 
 export default OutputView;

@@ -18,6 +18,7 @@ const OUTPUT_MESSAGE = Object.freeze({
   giveaway: giveawayEvent => `증정 이벤트: ${giveawayEvent}원`,
   totalBenefit: benefit => `${benefit}원`,
   paymentAmount: payment => `${payment}원`,
+  eventBadge: badge => `${badge}`,
   none: '없음',
 });
 
