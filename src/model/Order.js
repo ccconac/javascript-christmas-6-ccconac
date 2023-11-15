@@ -1,6 +1,6 @@
 import Validator from './Validator';
 import { MENU_BOARD } from '../constants/menuBoard';
-import { MAGIC_NUMBER, EVENT } from '../constants/constants';
+import { EVENT } from '../constants/constants';
 
 class Order {
   #orderedMenus;
