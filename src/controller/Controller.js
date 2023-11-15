@@ -1,4 +1,4 @@
-import Validator from '../validator/Validator';
+import Validator from '../model/Validator';
 import formatPrice from '../utils/formatPrice';
 
 class Controller {

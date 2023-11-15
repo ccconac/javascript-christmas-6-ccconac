@@ -1,4 +1,4 @@
-import Validator from '../../src/validator/Validator';
+import Validator from '../../src/model/Validator';
 import { ERROR_MESSAGE } from '../../src/constants/messages';
 import MENU_BOARD from '../../src/constants/menuBoard';
 

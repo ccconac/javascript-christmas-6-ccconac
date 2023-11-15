@@ -1,4 +1,4 @@
-import Validator from '../../src/validator/Validator';
+import Validator from '../../src/model/Validator';
 import { ERROR_MESSAGE } from '../../src/constants/messages';
 
 describe('방문 날짜 검증 테스트', () => {

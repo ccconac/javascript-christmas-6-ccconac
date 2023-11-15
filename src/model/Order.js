@@ -1,4 +1,4 @@
-import Validator from '../validator/Validator';
+import Validator from './Validator';
 import MENU_BOARD from '../constants/menuBoard';
 
 class Menu {
