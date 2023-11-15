@@ -10,6 +10,7 @@ class Controller {
   #reservationDate;
   #orderedMenus;
   #giveawayMenu;
+  #totalPrice;
 
   constructor(inputView, outputView, order, benefit) {
     this.#inputView = inputView;
@@ -27,6 +28,7 @@ class Controller {
     this.#printBeforeTotalPrice();
     this.#printGivewayMenu();
     this.#printBenefits();
+    this.#printTotalBenefit();
   }
 
   #printGreetingMessage() {
@@ -69,6 +71,7 @@ class Controller {
 
   #printBeforeTotalPrice() {
     const totalPrice = this.#order.circulateBeforeTotal();
+    this.#totalPrice = totalPrice;
     const formatTotalPrice = formatPrice(totalPrice);
     this.#outputView.printBeforeTotal(formatTotalPrice);
   }
@@ -80,10 +83,9 @@ class Controller {
   }
 
   #applyChristmasDiscount() {
-    const totalPrice = this.#order.circulateBeforeTotal();
     const discount = this.#benefit.christmasDiscount(
       this.#reservationDate,
-      totalPrice,
+      this.#totalPrice,
     );
 
     if (!discount) return false;
@@ -93,11 +95,10 @@ class Controller {
   }
 
   #applyWeekendDiscount() {
-    const totalPrice = this.#order.circulateBeforeTotal();
     const discount = this.#benefit.weekendDiscount(
       this.#reservationDate,
       this.#orderedMenus,
-      totalPrice,
+      this.#totalPrice,
     );
 
     if (!discount) return false;
@@ -107,11 +108,10 @@ class Controller {
   }
 
   #applyWeekdayDiscount() {
-    const totalPrice = this.#order.circulateBeforeTotal();
     const discount = this.#benefit.weekdayDiscount(
       this.#reservationDate,
       this.#orderedMenus,
-      totalPrice,
+      this.#totalPrice,
     );
 
     if (!discount) return false;
@@ -121,10 +121,9 @@ class Controller {
   }
 
   #applySpecialDiscount() {
-    const totalPrice = this.#order.circulateBeforeTotal();
     const discount = this.#benefit.specialDiscount(
       this.#reservationDate,
-      totalPrice,
+      this.#totalPrice,
     );
 
     if (!discount) return false;
@@ -154,6 +153,17 @@ class Controller {
     isNoBenefit = this.#applyGiveawayDiscount() || isNoBenefit;
 
     if (!isNoBenefit) this.#outputView.printNoBenefit();
+  }
+
+  #printTotalBenefit() {
+    const totalBenefit = this.#benefit.circulateBenefit(
+      this.#reservationDate,
+      this.#orderedMenus,
+      this.#totalPrice,
+      this.#giveawayMenu,
+    );
+
+    this.#outputView.printBenefit(formatPrice(totalBenefit));
   }
 }
 

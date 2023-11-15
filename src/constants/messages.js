@@ -16,6 +16,7 @@ const OUTPUT_MESSAGE = Object.freeze({
   weekdayDiscount: weekdayEvent => `주말 할인: ${weekdayEvent}원`,
   specialDiscount: specialEvent => `특별 할인: ${specialEvent}원`,
   giveaway: giveawayEvent => `증정 이벤트: ${giveawayEvent}원`,
+  totalBenefit: benefit => `${benefit}원`,
   none: '없음',
 });
 

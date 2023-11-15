@@ -59,6 +59,11 @@ const OutputView = {
   printNoBenefit() {
     Console.print(OUTPUT_MESSAGE.none);
   },
+
+  printBenefit(benefit) {
+    Console.print(TITLE.totalBenefit);
+    Console.print(OUTPUT_MESSAGE.totalBenefit(benefit));
+  },
 };
 
 export default OutputView;

@@ -72,6 +72,17 @@ class Benefit {
     if (giveaway === '없음') return false;
     return -25000;
   }
+
+  circulateBenefit(reservationDate, orderedMenus, totalPrice, giveaway) {
+    const totalBenefit =
+      (this.christmasDiscount(reservationDate, totalPrice) || 0) +
+      (this.weekendDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
+      (this.weekdayDiscount(reservationDate, orderedMenus, totalPrice) || 0) +
+      (this.specialDiscount(reservationDate, totalPrice) || 0) +
+      (this.giveawayEvent(giveaway) || 0);
+
+    return totalBenefit;
+  }
 }
 
 export default Benefit;
